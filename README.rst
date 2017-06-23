@@ -2,14 +2,12 @@
 Zeep-adv: Python SOAP client + mtom with mime type management
 ========================
 
-Based on : http://docs.python-zeep.org/
+Based on : http://docs.python-zeep.org/  
 And this mtom extention : https://github.com/mvantellingen/python-zeep/pull/314/files
 
-```
-pip install python-zeep-adv
-```
+`pip install python-zeep-adv`
 
-````python
+```python
 
     from zeep import Client
 
