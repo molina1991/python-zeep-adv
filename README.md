@@ -20,6 +20,6 @@ self.yourComplexeType(binary64fieldname=data_doc)  # Create the complexe type el
 
 ```
 
-This was developed for a specific usage and this code should not be used for other puposes has it.  
+This was developed for a specific usage and this code should not be used (has it) for other puposes.  
 (or at your own risks ;) )
 
