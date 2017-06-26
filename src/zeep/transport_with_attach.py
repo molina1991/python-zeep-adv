@@ -159,14 +159,26 @@ class TransportWithAttach(Transport):
         # some other stuff.
         bound = '--{}'.format(mtom_part.get_boundary())
         marray = mtom_part.as_string().split(bound)
+
         mtombody = bound
         mtombody += bound.join(marray[1:])
         mtom_part.add_header("Content-Length", str(len(mtombody)))
+
         headers.update(dict(mtom_part.items()))
-        message = mtom_part.as_string().split('\n\n', 1)[1]
-        message = message.replace('\n', '\r\n', 5)
+
+        # Awesome Corentin Patch to deal with the f* windows cp1252 encoding ;)
+        mtom_payloads = mtom_part._payload
+        res = "%s\n%s\n%s\n" % (bound, mtom_part._payload[0].as_string(), bound)
+        for part in mtom_part._payload[1:]:
+            res += "\n".join(["%s: %s"%(header[0], header[1]) for header in part._headers]) + "\n\n%s" % part._payload + "\n%s\n" % bound
+
+        #message = mtom_part.as_string().split('\n\n', 1)[1]
+        #message = message.replace('\n', '\r\n', 5)
+
+        res = res.replace('\n', '\r\n', 5)
         # return the messag for the post.
-        return message
+        #return message
+        return res
 
     def get_attachpart(self, cid):
         """The file part"""
@@ -184,5 +196,6 @@ class TransportWithAttach(Transport):
         self.file_content = file_content
 
         part.set_payload(file_content)
+
         del part['mime-version']
         return part

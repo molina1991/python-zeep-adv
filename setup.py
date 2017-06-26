@@ -48,7 +48,7 @@ with open('README.rst') as fh:
 
 setup(
     name='zeep-adv',
-    version='1.4.2',
+    version='1.4.3',
     description='A modern/fast Python SOAP client based on lxml / requests + Corentin Remaud silly edit',
     long_description=long_description,
     author="Michael van Tellingen, some edit by Corentin Remaud",
