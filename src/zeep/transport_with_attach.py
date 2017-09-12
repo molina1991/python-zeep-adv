@@ -8,8 +8,8 @@ Utils to add basic MTOMS attachment
 author: ellethee <luca800@gmail.com>
 edit: remaudcorentin <remaudcorentin.dev@gmail.com>
 
-based on http://stackoverflow.com/questions/35558812/how-to-send-multipart-related-requests-in-python-to-soap-server
-then edited to fit specific requirements, correct mimetype and some more data into atachments headers
+Based on http://stackoverflow.com/questions/35558812/how-to-send-multipart-related-requests-in-python-to-soap-server
+Then edited to fit specific requirements, correct mimetype and some more data into atachments headers
 """
 
 from os.path import basename
@@ -172,19 +172,13 @@ class TransportWithAttach(Transport):
         for part in mtom_part._payload[1:]:
             res += "\n".join(["%s: %s"%(header[0], header[1]) for header in part._headers]) + "\n\n%s" % part._payload + "\n%s\n" % bound
 
-        #message = mtom_part.as_string().split('\n\n', 1)[1]
-        #message = message.replace('\n', '\r\n', 5)
-
         res = res.replace('\n', '\r\n', 5)
-        # return the messag for the post.
-        #return message
         return res
 
     def get_attachpart(self, cid):
         """The file part"""
         attach = self.attachments[cid]
         mime_type = mimetypes.types_map[".%s" % attach.basename.split(".")[-1]].split("/")
-        #part = MIMEBase("*", "*")
         part = MIMEBase(mime_type[0], mime_type[1])
         part['Content-Type'] = "%s/%s; charset=us-ascii; name=%s" % (mime_type[0], mime_type[1], attach.filename.split("/")[-1])
         part['Content-Transfer-Encoding'] = "7bit"
