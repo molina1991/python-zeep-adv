@@ -104,7 +104,7 @@ def get_envelopepart(envelope):
 def _client_attach(self, filename):
     """add attachment"""
     attach = Attachment(filename)
-    self.transport.attachments[attach.cid] = attach
+    self.transport.attachments[str_to_sa(attach.cid)] = attach
     return attach.tag
 
 
@@ -154,6 +154,7 @@ class TransportWithAttach(Transport):
         mtom_part.attach(env_part)
         # for each filename in files.
         for cid in files:
+            cid = str_to_sa(cid)
             # attach the filepart to the multipart.
             part = self.get_attachpart(cid)
             mtom_part.attach(part)
@@ -171,7 +172,7 @@ class TransportWithAttach(Transport):
         mtom_payloads = mtom_part._payload
         res = "%s\n%s\n%s\n" % (bound, mtom_part._payload[0].as_string(), bound)
         for part in mtom_part._payload[1:]:
-            res += str_to_sa("\n".join(["%s: %s" % (header[0], header[1]) for header in part._headers]) + "\n\n%s" % part._payload + "\n%s\n" % bound)
+            res += "\n".join(["%s: %s" % (header[0], str_to_sa(header[1])) for header in part._headers]) + "\n\n%s" % part._payload + "\n%s\n" % bound
 
         res = res.replace('\n', '\r\n', 5)
         return res

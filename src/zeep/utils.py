@@ -1,4 +1,5 @@
 import cgi
+import re
 import inspect
 
 from lxml import etree
