@@ -171,7 +171,7 @@ class TransportWithAttach(Transport):
         mtom_payloads = mtom_part._payload
         res = "%s\n%s\n%s\n" % (bound, mtom_part._payload[0].as_string(), bound)
         for part in mtom_part._payload[1:]:
-            res += "\n".join([str_to_sa("%s: %s") % (header[0], header[1]) for header in part._headers]) + "\n\n%s" % part._payload + "\n%s\n" % bound
+            res += str_to_sa("\n".join(["%s: %s" % (header[0], header[1]) for header in part._headers]) + "\n\n%s" % part._payload + "\n%s\n" % bound)
 
         res = res.replace('\n', '\r\n', 5)
         return res
