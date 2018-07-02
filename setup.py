@@ -42,15 +42,12 @@ tests_require = [
     'flake8-debugger==1.4.0',
 ]
 
-with open('README.rst') as fh:
-    long_description = re.sub(
-        '^.. start-no-pypi.*^.. end-no-pypi', '', fh.read(), flags=re.M | re.S)
 
 setup(
     name='zeep-adv',
-    version='1.4.3',
+    version='1.4.4',
     description='A modern/fast Python SOAP client based on lxml / requests + Corentin Remaud silly edit',
-    long_description=long_description,
+    long_description="Python SOAP client + mtom with mime type management",
     author="Michael van Tellingen, some edit by Corentin Remaud",
     author_email="remaudcorentin.dev@gmail.com",
     url='http://docs.python-zeep.org',

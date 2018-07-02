@@ -5,6 +5,24 @@ from lxml import etree
 from zeep.ns import XSD
 from zeep.exceptions import XMLParseError
 
+def str_to_sa(s):
+    """
+    Remove/Replace all 'weird' chars from the string in parameter according to dict bellow.
+    """
+    try:
+        tab = {"Á": "A", "À": "A", "Ă": "A", "Â": "A", "Å": "A", "Ä": "A", "Ã": "A", "Ą": "A", "Æ": "AE", "Ć": "C",
+               "Č": "C", "Ç": "C", "Ď": "D", "Đ": "D", "É": "E", "È": "E", "Ê": "E", "Ě": "E", "Ë": "E", "Ę": "E",
+               "Ğ": "G", "Í": "I", "Ì": "I", "Î": "I", "Ï": "I", "Ĺ": "L", "Ľ": "L", "Ł": "L", "Ń": "N", "Ň": "N",
+               "Ñ": "N", "Ó": "O", "Ò": "O", "Ô": "O", "Ö": "O", "Õ": "O", "Ø": "O", "Œ": "OE", "Ŕ": "R", "Ř": "R",
+               "Ś": "S", "Š": "S", "Ş": "S", "Ș": "S", "Ť": "T", "Ț": "T", "Ú": "U", "Ù": "U", "Û": "U", "Ü": "U",
+               "Ý": "Y", "Ÿ": "Y", "Ź": "Z", "Ž": "Z", "Ż": "Z", "Þ": "T", "'": "", "’": "", "‘": "", '“': "", '”': "",
+               '"': "",  "ø": "o"}
+        pattern = re.compile('|'.join(tab.keys()))
+        res = pattern.sub(lambda x: tab[x.group()], s)
+        return " ".join(res.split())
+    except Exception as e:
+        return ""
+
 
 def qname_attr(node, attr_name, target_namespace=None):
     value = node.get(attr_name)

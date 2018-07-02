@@ -24,6 +24,7 @@ from base64 import b64decode, b64encode
 from lxml import etree
 from zeep.transports import Transport
 from zeep.wsdl.utils import etree_to_string
+from .utils import str_to_sa
 from zeep.xsd import builtins
 from zeep.wsdl.bindings import http
 from zeep.wsdl import wsdl
@@ -170,7 +171,7 @@ class TransportWithAttach(Transport):
         mtom_payloads = mtom_part._payload
         res = "%s\n%s\n%s\n" % (bound, mtom_part._payload[0].as_string(), bound)
         for part in mtom_part._payload[1:]:
-            res += "\n".join(["%s: %s"%(header[0], header[1]) for header in part._headers]) + "\n\n%s" % part._payload + "\n%s\n" % bound
+            res += "\n".join([str_to_sa("%s: %s") % (header[0], header[1]) for header in part._headers]) + "\n\n%s" % part._payload + "\n%s\n" % bound
 
         #message = mtom_part.as_string().split('\n\n', 1)[1]
         #message = message.replace('\n', '\r\n', 5)
