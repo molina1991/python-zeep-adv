@@ -22,8 +22,8 @@ self.yourComplexeType(binary64fieldname=data_doc)  # Create the complexe type el
 
 ```
 
-This was developed for a specific usage and this code should not be used (has it) for other puposes.  
+This has been developed for a specific usage and this code should probably not be used (has it) for other puposes.  
 (or at your own risks ;) )
 
-
+If you're feeling lucky :  
 Support / Contact : remaudcorentin.dev@gmail.com
